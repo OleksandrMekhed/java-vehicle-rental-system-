@@ -1,0 +1,67 @@
+Slutprojekt
+Programmering med Java · DEV26M_PJ-2
+
+Uppgift
+Uppgiften är ett självständigt programmeringsprojekt i Java. Den studerande designar och implementerar, individuellt eller i par, ett objektorienterat system inom en självvald domän.
+
+Uppgiften examinerar följande kursmål:
+
+Redogöra för syntax för programspråket Java
+Redogöra för objektorienterad programmering, kunna förklara hur större programmeringsuppgifter kan lösas objektorienterat, samt resonera om olika lösningsalternativ
+Redogöra för Javas standardbibliotek
+Tillämpa Java för att lösa olika programmeringsuppgifter
+Redogöra för terminologi inom ämnesområdet på engelska
+Ramar
+Individuellt eller i par. Max två personer per projekt.
+Fritt vald domän, utifrån eget intresse.
+Projektet ska ha en rimlig omfattning och vara komplett.
+Projektet publiceras på GitHub.
+Exempel på projektidéer
+Domänen är fri. Listan nedan är inte uttömmande och ska ses som inspiration, inte som färdiga lösningar.
+
+Kontosystem för en bank
+Biluthyrning eller bilverkstad
+Skolsystem för klasser och betyg
+Biblioteksystem
+Beställningssystem för en restaurang
+Medlemskap på ett gym
+En domän med tydlig risk för att växa förbi en rimlig omfattning — till exempel ett spel med strid, nivåer och inventarium — går bra, men kräver att hierarkin och interfacet hålls medvetet avgränsade.
+
+Krav för Godkänt (G)
+Samtliga krav nedan ska vara uppfyllda.
+
+En klasshierarki med en superklass och minst tre subklasser (arv med extends). [OOP, Syntax]
+Minst två metoder som overridas i varje subklass (@Override), samt en polymorf lista som itereras och visar att korrekt metodversion körs automatiskt för respektive objekt. [OOP, Syntax]
+Ett eget interface, implementerat av minst två klasser, och använt polymorft — t.ex. genom en loop eller ett metodanrop där olika klasser hanteras via samma interface-referens. [OOP, Syntax]
+Collections (ArrayList eller motsvarande) som genomsöks eller aggregeras utifrån verklig data — inte enbart lagras och skrivs ut, och inte ett hårdkodat sökvärde. [Standardbibliotek, Tillämpa Java]
+Ett interaktivt konsolprogram: en klass med en meny i en loop, med minst fyra valbara åtgärder kopplade till samlingen i punkt 4 (till exempel lägga till, ta bort, söka, samt en egen åtgärd som passar domänen). [Tillämpa Java, Syntax]
+Minst två try/catch-block som hanterar verkliga, rimliga felscenarion i programmet — inte enbart för att uppfylla kravet. Till exempel validering i en konstruktor som kastar IllegalArgumentException vid ogiltiga värden, och ett fel som kan uppstå vid inmatning eller körning. Ett generellt catch (Exception e) utan faktisk validering uppfyller inte kravet. [Tillämpa Java]
+Programmet ska inte gå att krascha genom ogiltig inmatning i menyn (bokstäver, tomt svar, eller ett ogiltigt menyval). [Tillämpa Java]
+Kommentarer/README som beskriver strukturen, med centrala begrepp korrekt använda på engelsk terminologi. [Terminologi]
+Kontinuerlig användning av Git som dokumenterar arbetsprocessen: minst 20 commits vid individuellt arbete (minst 15 vardera vid par), spridda över minst 5 olika dagar under projektperioden — inte gjorda vid ett enda tillfälle. Commit-meddelanden skrivs på engelska och ska beskriva vad som faktiskt gjordes (t.ex. "Add exception handling to input parser", inte "fix" eller "asdf"), och historiken ska visa en organisk utveckling av lösningen. Commits utan innehållsmässig förändring (t.ex. enbart blankrader eller formatering) räknas inte mot kravet. [Terminologi]
+Samtliga krav ovan ska vara integrerade i samma sammanhängande program — inte fristående, orelaterade kodexempel.
+
+Vid par: projektet ska innehålla minst en extra klass eller funktion utöver kraven ovan, jämfört med ett individuellt projekt.
+
+Krav för Väl Godkänt (VG)
+Enligt kursplanen krävs, utöver samtliga kursmål på G-nivå, att:
+
+Den studerande tillämpar med säkerhet Java för att lösa olika programmeringsuppgifter.
+
+Den studerande reflekterar över och värderar med säkerhet de val som gjorts under genomförandet av programmeringsuppgifter och vilken effekt dessa kan ha.
+
+Konkret innebär detta, utöver samtliga G-krav:
+
+Lösningen är genomtänkt utöver minimikraven: tydlig ansvarsfördelning mellan klasserna och konsekvent namngivning.
+Menyklassen innehåller endast interaktionslogik. Affärslogik (beräkningar, validering, regler) ligger i domänklasserna.
+Felhanteringen är genomtänkt snarare än minimal — informativa felmeddelanden och specifika catch-block istället för generella.
+Koden är strukturerad så att den kan byggas vidare på utan att befintlig kod skrivs om.
+Teknisk skiss
+Ett exempel på hur klasserna skulle kunna hänga ihop (generiskt — ersätts av egen domän):
+
+Superklass — gemensamma fält och de metoder som subklasserna overridar.
+Subklass A — extends superklassen.
+Subklass B — extends superklassen.
+Subklass C — extends superklassen.
+Interface — en egen metodsignatur, implements av minst två av subklasserna.
+Manager-klass — håller listan av objekt, kör den interaktiva menyn i en loop, och innehåller try/catch runt inmatningen.
