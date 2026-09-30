@@ -1,14 +1,15 @@
 /**
  * Subclass representing a regular Car in the rental system.
- * Add the number of seats.
+ * Extends the abstract Vehicle class and adds the number of seats.
  */
-public class Car {
+public class Car extends Vehicle {
     private int seats;
 
     /**
-     * Constructor initializing Car.
+     * Constructor initializing Car attributes along with inherited Vehicle fields.
      */
-    public Car(int seats) {
+    public Car(String id, String brand, String model, double pricePerDay, int seats) {
+        super(id, brand, model, pricePerDay);
         setSeats(seats);
     }
 
@@ -23,5 +24,22 @@ public class Car {
             throw new IllegalArgumentException("Seats must be greater than zero.");
         }
         this.seats = seats;
+    }
+
+    /**
+     * Calculates the rental cost: price per day multiplied by the number of days.
+     */
+    @Override
+    public double calculateRentalCost(int days) {
+        validateDays(days);
+        return getPricePerDay() * days;
+    }
+
+    /**
+     * Extends general Vehicle details with car specifics.
+     */
+    @Override
+    public String getDetails() {
+        return super.getDetails() + " || Seats: " + getSeats();
     }
 }
