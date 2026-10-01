@@ -90,10 +90,12 @@ Both interfaces are used polymorphically: insurance costs are summed by looping 
 ### Program Structure
 * `Main` — Starts the program only.
 * `RentalMenu` — Interaction logic only (reading input, printing output).
-* `RentalService` — Holds the `List<Vehicle>`; contains add, remove, search and report logic.
+* `RentalService` — Holds the `ArrayList<Vehicle>`; contains add, remove, search and report logic.
 * Domain classes (`Vehicle` and its subclasses) — Contain all validation and calculations.
 
 ---
 
 ### Reflection & Design Rationale
-*(To be filled during development: Explaining architectural decisions, separation of concerns, and OOP principles applied).*
+
+**This project is currently in active development. Implementation details may change and this README.md will be 
+updated accordingly.**
