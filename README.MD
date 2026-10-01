@@ -99,3 +99,4 @@ Both interfaces are used polymorphically: insurance costs are summed by looping 
 
 **This project is currently in active development. Implementation details may change and this README.md will be 
 updated accordingly.**
+**[Reflection & Design Rationale](docs/Reflection_Design.MD)**
