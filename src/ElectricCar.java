@@ -2,9 +2,10 @@
  * Subclass representing an Electric Car in the rental system.
  * Extends Vehicle and adds battery level and driving range.
  */
-public class ElectricCar extends Vehicle {
+public class ElectricCar extends Vehicle implements Insurable, Chargeable {
     private static final double ECO_DISCOUNT = 0.10;
-    private static final int MIN_BATTERY_TO_RENT = 20;
+    private static final double INSURANCE_PER_DAY = 40.0;
+
 
     private int batteryPercent;
     private int rangeKm;
@@ -19,6 +20,7 @@ public class ElectricCar extends Vehicle {
     }
 
     // Getters
+    @Override
     public int getBatteryPercent() {
         return batteryPercent;
     }
@@ -65,6 +67,23 @@ public class ElectricCar extends Vehicle {
                     + "%, minimum is " + MIN_BATTERY_TO_RENT + "%).");
         }
         super.rent();
+    }
+
+    /**
+     * Calculates insurance: fixed daily rate multiplied by days.
+     */
+    @Override
+    public double calculateInsuranceCost(int days) {
+        validateDays(days);
+        return INSURANCE_PER_DAY * days;
+    }
+
+    /**
+     * Charges the battery to full (100%).
+     */
+    @Override
+    public void charge() {
+        setBatteryPercent(FULL_BATTERY);
     }
 
     /**
