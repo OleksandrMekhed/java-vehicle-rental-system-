@@ -2,7 +2,9 @@
  * Subclass representing a regular Car in the rental system.
  * Extends the abstract Vehicle class and adds the number of seats.
  */
-public class Car extends Vehicle {
+public class Car extends Vehicle implements Insurable {
+    private static final double INSURANCE_PER_DAY = 50.0;
+
     private int seats;
 
     /**
@@ -33,6 +35,15 @@ public class Car extends Vehicle {
     public double calculateRentalCost(int days) {
         validateDays(days);
         return getPricePerDay() * days;
+    }
+
+    /**
+     * Calculates insurance: fixed daily rate multiplied by days.
+     */
+    @Override
+    public double calculateInsuranceCost(int days) {
+        validateDays(days);
+        return INSURANCE_PER_DAY * days;
     }
 
     /**
