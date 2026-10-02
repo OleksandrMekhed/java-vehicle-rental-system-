@@ -2,8 +2,9 @@
  * Subclass representing a Truck in the rental system.
  * Extends Vehicle and adds load capacity.
  */
-public class Truck extends Vehicle {
+public class Truck extends Vehicle implements Insurable {
     private static final double SURCHARGE_PER_KG_PER_DAY = 0.02;
+    private static final double INSURANCE_PER_DAY = 120.0;
 
     private double loadCapacityKg;
 
@@ -37,6 +38,15 @@ public class Truck extends Vehicle {
         validateDays(days);
         double dailySurcharge = loadCapacityKg * SURCHARGE_PER_KG_PER_DAY;
         return (getPricePerDay() + dailySurcharge) * days;
+    }
+
+    /**
+     * Calculates insurance: fixed daily rate multiplied by days.
+     */
+    @Override
+    public double calculateInsuranceCost(int days) {
+        validateDays(days);
+        return INSURANCE_PER_DAY * days;
     }
 
     /**
