@@ -2,10 +2,8 @@
  * Subclass representing an Electric Scooter in the rental system.
  * Extends Vehicle and adds battery level and maximum speed.
  */
-public class ElectricScooter extends Vehicle {
-    private static final int MIN_BATTERY_TO_RENT = 20;
+public class ElectricScooter extends Vehicle implements Chargeable {
     private static final int MAX_RENTAL_DAYS = 7;
-
 
     private int batteryPercent;
     private int maxSpeedKmh;
@@ -20,6 +18,7 @@ public class ElectricScooter extends Vehicle {
     }
 
     // Getters
+    @Override
     public int getBatteryPercent() {
         return batteryPercent;
     }
@@ -72,6 +71,14 @@ public class ElectricScooter extends Vehicle {
                     + "%, minimum is " + MIN_BATTERY_TO_RENT + "%).");
         }
         super.rent();
+    }
+
+    /**
+     * Charges the battery to full (100%).
+     */
+    @Override
+    public void charge() {
+        setBatteryPercent(FULL_BATTERY);
     }
 
     /**
