@@ -64,4 +64,35 @@ public class RentalMenu {
             }
         }
     }
+
+    /**
+     *  Runs the main menu loop until the user chooses to exit.
+     **/
+    public void run() {
+        while (running) {
+            System.out.println("\n--- Rental Menu ---");
+            System.out.println("1. Show all vehicles");
+            System.out.println("2. Add vehicle");
+
+            int choice = readInt("Enter your choice: ");
+
+
+            switch (choice) {
+                case 1:
+                    showAllVehicles();
+                    break;
+                case 2:
+                    addVehicleFlow();
+                    break;
+                case 0:
+                    running = false;
+                    System.out.println("Exiting the program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        }
+        scanner.close();
+    }
 }
