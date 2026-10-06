@@ -81,4 +81,24 @@ public class RentalService {
         }
         return result;
     }
+
+    /**
+     * Searches vehicles by type, e.g. "Car", "ElectricCar", "Truck" or "ElectricScooter"
+     * (case-insensitive, spaces are ignored).
+     *
+     * @throws IllegalArgumentException if the type is empty
+     */
+    public ArrayList<Vehicle> searchByType(String type) {
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vehicle type cannot be null or empty.");
+        }
+        String query = type.replace(" ", "");
+        ArrayList<Vehicle> result = new ArrayList<>();
+        for (Vehicle v : vehicles) {
+            if (v.getClass().getSimpleName().equalsIgnoreCase(query)) {
+                result.add(v);
+            }
+        }
+        return result;
+    }
 }
