@@ -73,6 +73,7 @@ public class RentalMenu {
             System.out.println("\n--- Rental Menu ---");
             System.out.println("1. Show all vehicles");
             System.out.println("2. Add vehicle");
+            System.out.println("0. Exit");
 
             int choice = readInt("Enter your choice: ");
 

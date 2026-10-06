@@ -112,4 +112,15 @@ public class RentalService {
         Vehicle v = findById(id);
         v.rent();
     }
+
+    /**
+     * Returns the vehicle with the given ID to the fleet.
+     *
+     * @throws IllegalArgumentException if the ID is empty or not found
+     * @throws IllegalStateException if the vehicle is not currently rented
+     */
+    public void returnVehicle(String id) {
+        Vehicle v = findById(id);
+        v.returnVehicle();
+    }
 }
