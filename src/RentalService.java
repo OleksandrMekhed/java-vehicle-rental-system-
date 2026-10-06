@@ -48,4 +48,37 @@ public class RentalService {
         }
         throw new IllegalArgumentException("No vehicle found with ID " + id.trim() + ".");
     }
+
+    /**
+     * Removes a vehicle from the fleet.
+     *
+     * @throws IllegalArgumentException if the ID is empty or no vehicle has this ID
+     * @throws IllegalStateException if the vehicle is currently rented
+     */
+    public void removeVehicle(String id) {
+        Vehicle v = findById(id);
+        if (v.isRented()) {
+            throw new IllegalStateException("Vehicle " + v.getId() + " is currently rented and cannot be removed.");
+        }
+        vehicles.remove(v);
+    }
+
+    /**
+     * Searches vehicles whose brand contains the given text.
+     *
+     * @throws IllegalArgumentException if the search text is empty
+     */
+    public ArrayList<Vehicle> searchByBrand(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            throw new IllegalArgumentException("Search text cannot be null or empty.");
+        }
+        String query = text.trim().toLowerCase();
+        ArrayList<Vehicle> result = new ArrayList<>();
+        for (Vehicle v : vehicles) {
+            if (v.getBrand().toLowerCase().contains(query)) {
+                result.add(v);
+            }
+        }
+        return result;
+    }
 }
