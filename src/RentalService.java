@@ -31,4 +31,21 @@ public class RentalService {
     public ArrayList<Vehicle> getAll() {
         return new ArrayList<>(vehicles);
     }
+
+    /**
+     * Finds a vehicle by its ID.
+     *
+     * @throws IllegalArgumentException if the ID is empty or no vehicle has this ID
+     */
+    public Vehicle findById(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Vehicle ID cannot be null or empty.");
+        }
+        for (Vehicle v : vehicles) {
+            if (v.getId().equalsIgnoreCase(id.trim())) {
+                return v;
+            }
+        }
+        throw new IllegalArgumentException("No vehicle found with ID " + id.trim() + ".");
+    }
 }
