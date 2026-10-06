@@ -101,4 +101,15 @@ public class RentalService {
         }
         return result;
     }
+
+    /**
+     * Rents out the vehicle with the given ID.
+     *
+     * @throws IllegalArgumentException if the ID is empty or not found
+     * @throws IllegalStateException if the vehicle is already rented or its battery is too low
+     */
+    public void rentVehicle(String id) {
+        Vehicle v = findById(id);
+        v.rent();
+    }
 }
