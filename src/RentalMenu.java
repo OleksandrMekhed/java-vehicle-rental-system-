@@ -95,4 +95,77 @@ public class RentalMenu {
         }
         scanner.close();
     }
+
+    /**
+     * Prints details of every vehicle in the fleet.
+     */
+    private void showAllVehicles() {
+        ArrayList<Vehicle> vehicles = rentalService.getAll();
+        if (vehicles.isEmpty()) {
+            System.out.println("The fleet is empty.");
+            return;
+        }
+        printVehicles(vehicles);
+    }
+
+    /**
+     * Prints details of each vehicle in the given list.
+     * The correct getDetails() version runs for each object (polymorphism).
+     */
+    private void printVehicles(ArrayList<Vehicle> list) {
+        for (Vehicle v : list) {
+            System.out.println(v.getDetails());
+        }
+    }
+
+    /**
+     * Asks for the vehicle type and its data, creates the vehicle and adds it to the fleet.
+     * Validation errors from constructors and duplicate IDs are shown to the user.
+     */
+    private void addVehicleFlow() {
+        int type = readInt("1 = Car, 2 = ElectricCar, 3 = Truck, 4 = ElectricScooter\nEnter vehicle type: ");
+        if (type < 1 || type > 4) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+        String id = readText("Enter ID: ");
+        String brand = readText("Enter brand: ");
+        String model = readText("Enter model: ");
+        double pricePerDay = readDouble("Enter price per day: ");
+
+        try {
+            Vehicle vehicle;
+            switch (type) {
+                case 1: {
+                    int seats = readInt("Enter number of seats: ");
+                    vehicle = new Car(id, brand, model, pricePerDay, seats);
+                    break;
+                }
+                case 2: {
+                    int batteryPercent = readInt("Enter battery percentage: ");
+                    int rangeKm = readInt("Enter range in kilometers: ");
+                    vehicle = new ElectricCar(id, brand, model, pricePerDay, batteryPercent, rangeKm);
+                    break;
+                }
+                case 3: {
+                    double loadCapacityKg = readDouble("Enter load capacity in kilograms: ");
+                    vehicle = new Truck(id, brand, model, pricePerDay, loadCapacityKg);
+                    break;
+                }
+                case 4: {
+                    int batteryPercent = readInt("Enter battery percentage: ");
+                    int maxSpeedKmh = readInt("Enter maximum speed in kilometers per hour: ");
+                    vehicle = new ElectricScooter(id, brand, model, pricePerDay, batteryPercent, maxSpeedKmh);
+                    break;
+                }
+                default:
+                    System.out.println("Invalid vehicle type.");
+                    return;
+            }
+            rentalService.addVehicle(vehicle);
+            System.out.println("Vehicle added successfully.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("[ ERROR ]: " + e.getMessage());
+        }
+    }
 }
