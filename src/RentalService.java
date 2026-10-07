@@ -136,4 +136,17 @@ public class RentalService {
         }
         return countRented;
     }
+
+    /**
+     * Calculates the expected income for one day of rental from all rented vehicles.
+     */
+    public double getExpectedDailyIncome() {
+        double dailyIncome = 0.0;
+        for (Vehicle v : vehicles) {
+            if (v.isRented()) {
+                dailyIncome += v.calculateRentalCost(1);
+            }
+        }
+        return dailyIncome;
+    }
 }

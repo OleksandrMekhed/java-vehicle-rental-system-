@@ -60,7 +60,7 @@ public class RentalMenu {
                     return value;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number (use a dot, e.g. 49.5).");
+                System.out.println("Invalid input. Please enter a number (use for example: 49.5).");
             }
         }
     }
