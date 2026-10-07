@@ -165,4 +165,20 @@ public class RentalService {
         }
         return totalInsurance;
     }
+
+    /**
+     * Returns all chargeable vehicles in the fleet (not rented) whose battery
+     * is below the minimum needed to rent.
+     */
+    public ArrayList<Vehicle> getVehiclesNeedingCharge() {
+        ArrayList<Vehicle> vehiclesNeedingCharge = new ArrayList<>();
+        for (Vehicle v : vehicles) {
+            if (v instanceof Chargeable c
+                    && !v.isRented()
+                    && c.getBatteryPercent() < Chargeable.MIN_BATTERY_TO_RENT) {
+                vehiclesNeedingCharge.add(v);
+            }
+        }
+        return vehiclesNeedingCharge;
+    }
 }
