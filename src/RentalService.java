@@ -123,4 +123,17 @@ public class RentalService {
         Vehicle v = findById(id);
         v.returnVehicle();
     }
+
+    /**
+     * Counts how many vehicles are currently rented.
+     */
+    public int getRentedCount() {
+        int countRented = 0;
+        for (Vehicle v : vehicles) {
+            if (v.isRented()) {
+                countRented++;
+            }
+        }
+        return countRented;
+    }
 }
