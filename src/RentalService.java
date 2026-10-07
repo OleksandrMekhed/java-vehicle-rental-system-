@@ -149,4 +149,20 @@ public class RentalService {
         }
         return dailyIncome;
     }
+
+    /**
+     * Calculates the total insurance cost for the given number of days
+     * for all insurable vehicles in the fleet (polymorphism via Insurable).
+     *
+     * @throws IllegalArgumentException if days is not positive
+     */
+    public double getTotalInsuranceCost(int days) {
+        double totalInsurance = 0.0;
+        for (Vehicle v : vehicles) {
+            if (v instanceof Insurable i) {
+                totalInsurance += i.calculateInsuranceCost(days);
+            }
+        }
+        return totalInsurance;
+    }
 }
