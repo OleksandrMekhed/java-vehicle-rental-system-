@@ -74,6 +74,7 @@ public class RentalMenu {
             System.out.println("1. Show all vehicles");
             System.out.println("2. Add vehicle");
             System.out.println("3. Rent / return vehicle");
+            System.out.println("4. Search vehicles");
             System.out.println("0. Exit");
 
             int choice = readInt("Enter your choice: ");
@@ -88,6 +89,9 @@ public class RentalMenu {
                     break;
                 case 3:
                     rentReturnFlow();
+                    break;
+                case 4:
+                    searchFlow();
                     break;
                 case 0:
                     running = false;
@@ -194,6 +198,34 @@ public class RentalMenu {
                 System.out.println("Vehicle returned successfully.");
             }
         } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("[ ERROR ]: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Asks whether to search by brand or by type, then asks for the search term
+     * and prints the matching vehicles.
+     */
+    private void searchFlow() {
+        int choice = readInt("Enter 1 to search by brand, 2 to search by type: ");
+        if (choice != 1 && choice != 2) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+        String search = readText("Enter search term: ");
+        try {
+            ArrayList<Vehicle> results;
+            if (choice == 1) {
+                results = rentalService.searchByBrand(search);
+            } else {
+                results = rentalService.searchByType(search);
+            }
+            if (results.isEmpty()) {
+                System.out.println("No vehicles found.");
+            } else {
+                printVehicles(results);
+            }
+        } catch (IllegalArgumentException e) {
             System.out.println("[ ERROR ]: " + e.getMessage());
         }
     }
