@@ -73,6 +73,7 @@ public class RentalMenu {
             System.out.println("\n--- Rental Menu ---");
             System.out.println("1. Show all vehicles");
             System.out.println("2. Add vehicle");
+            System.out.println("3. Rent / return vehicle");
             System.out.println("0. Exit");
 
             int choice = readInt("Enter your choice: ");
@@ -84,6 +85,9 @@ public class RentalMenu {
                     break;
                 case 2:
                     addVehicleFlow();
+                    break;
+                case 3:
+                    rentReturnFlow();
                     break;
                 case 0:
                     running = false;
@@ -166,6 +170,30 @@ public class RentalMenu {
             rentalService.addVehicle(vehicle);
             System.out.println("Vehicle added successfully.");
         } catch (IllegalArgumentException e) {
+            System.out.println("[ ERROR ]: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Asks whether to rent or return a vehicle, then asks for its ID.
+     * Domain errors (unknown ID, already rented, battery too low) are shown to the user.
+     */
+    private void rentReturnFlow() {
+        int choice = readInt("Enter 1 to rent a vehicle, 2 to return a vehicle: ");
+        if (choice != 1 && choice != 2) {
+            System.out.println("Invalid choice.");
+            return;
+        }
+        String id = readText("Enter vehicle ID: ");
+        try {
+            if (choice == 1) {
+                rentalService.rentVehicle(id);
+                System.out.println("Vehicle rented successfully.");
+            } else {
+                rentalService.returnVehicle(id);
+                System.out.println("Vehicle returned successfully.");
+            }
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("[ ERROR ]: " + e.getMessage());
         }
     }
