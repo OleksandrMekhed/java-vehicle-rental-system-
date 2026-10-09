@@ -76,6 +76,7 @@ public class RentalMenu {
             System.out.println("3. Rent / return vehicle");
             System.out.println("4. Search vehicles");
             System.out.println("5. Remove vehicle");
+            System.out.println("6. Fleet report");
             System.out.println("0. Exit");
 
             int choice = readInt("Enter your choice: ");
@@ -96,6 +97,9 @@ public class RentalMenu {
                     break;
                 case 5:
                     removeVehicleFlow();
+                    break;
+                case 6:
+                    reportFlow();
                     break;
                 case 0:
                     running = false;
@@ -195,7 +199,7 @@ public class RentalMenu {
         String id = readText("Enter vehicle ID: ");
         try {
             if (choice == 1) {
-                rentalService.rentVehicle(id);
+                rentalService.rentVehicle   (id);
                 System.out.println("Vehicle rented successfully.");
             } else {
                 rentalService.returnVehicle(id);
@@ -205,6 +209,7 @@ public class RentalMenu {
             System.out.println("[ ERROR ]: " + e.getMessage());
         }
     }
+
 
     /**
      * Asks whether to search by brand or by type, then asks for the search term
@@ -247,4 +252,40 @@ public class RentalMenu {
             System.out.println("[ ERROR ]: " + e.getMessage());
         }
     }
+
+    /**
+     * Prints the fleet report: rented count, expected daily income, total insurance
+     * and vehicles that need charging. Offers to charge the vehicles in the fleet.
+     */
+    private void reportFlow() {
+        System.out.println("\n--- Fleet Report ---");
+        System.out.println("Rented vehicles: " + rentalService.getRentedCount());
+        System.out.println("Expected income per day: "
+                + String.format("%.2f", rentalService.getExpectedDailyIncome()) + " SEK");
+
+        int days = readInt("Enter number of days for insurance calculation: ");
+        if (days <= 0) {
+            System.out.println("Days must be greater than zero. Insurance total skipped.");
+        } else {
+            System.out.println("Total insurance for " + days + " day(s): "
+                    + String.format("%.2f", rentalService.getTotalInsuranceCost(days)) + " SEK");
+        }
+
+        ArrayList<Vehicle> needCharge = rentalService.getVehiclesNeedingCharge();
+        if (needCharge.isEmpty()) {
+            System.out.println("No vehicles need charging.");
+            return;
+        }
+        System.out.println("Vehicles that need charging:");
+        printVehicles(needCharge);
+
+        int choice = readInt("Charge all available electric vehicles now? 1 = yes, 2 = no: ");
+        if (choice == 1) {
+            int charged = rentalService.chargeAll();
+            System.out.println("Charged vehicles: " + charged);
+        } else if (choice != 2) {
+            System.out.println("Invalid choice. Nothing was charged.");
+        }
+    }
 }
+
