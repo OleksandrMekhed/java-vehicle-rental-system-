@@ -75,6 +75,7 @@ public class RentalMenu {
             System.out.println("2. Add vehicle");
             System.out.println("3. Rent / return vehicle");
             System.out.println("4. Search vehicles");
+            System.out.println("5. Remove vehicle");
             System.out.println("0. Exit");
 
             int choice = readInt("Enter your choice: ");
@@ -92,6 +93,9 @@ public class RentalMenu {
                     break;
                 case 4:
                     searchFlow();
+                    break;
+                case 5:
+                    removeVehicleFlow();
                     break;
                 case 0:
                     running = false;
@@ -226,6 +230,20 @@ public class RentalMenu {
                 printVehicles(results);
             }
         } catch (IllegalArgumentException e) {
+            System.out.println("[ ERROR ]: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Asks for a vehicle ID and removes that vehicle from the fleet.
+     * Domain errors (unknown ID, vehicle is rented) are shown to the user.
+     */
+    private void removeVehicleFlow() {
+        String id = readText("Enter vehicle ID: ");
+        try {
+            rentalService.removeVehicle(id);
+            System.out.println("Vehicle removed successfully.");
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("[ ERROR ]: " + e.getMessage());
         }
     }
