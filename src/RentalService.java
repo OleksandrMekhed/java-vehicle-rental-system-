@@ -181,4 +181,20 @@ public class RentalService {
         }
         return vehiclesNeedingCharge;
     }
+
+    /**
+     * Charges every chargeable vehicle in the fleet that is not currently rented.
+     *
+     * @return number of vehicles that were charged
+     */
+    public int chargeAll() {
+        int totalChargeCount = 0;
+        for (Vehicle v : vehicles) {
+            if (v instanceof Chargeable c && !v.isRented()) {
+                c.charge();
+                totalChargeCount++;
+            }
+        }
+        return totalChargeCount;
+    }
 }
