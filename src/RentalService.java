@@ -103,14 +103,18 @@ public class RentalService {
     }
 
     /**
-     * Rents out the vehicle with the given ID.
+     * Rents out the vehicle for the given number of days and returns the total cost.
+     * The cost is calculated first, so invalid days (for example more than 7 for a
+     * scooter) are rejected before the vehicle changes state.
      *
-     * @throws IllegalArgumentException if the ID is empty or not found
+     * @throws IllegalArgumentException if the ID is not found or the days are invalid
      * @throws IllegalStateException if the vehicle is already rented or its battery is too low
      */
-    public void rentVehicle(String id) {
+    public double rentVehicle(String id, int days) {
         Vehicle v = findById(id);
+        double cost = v.calculateRentalCost(days);
         v.rent();
+        return cost;
     }
 
     /**
