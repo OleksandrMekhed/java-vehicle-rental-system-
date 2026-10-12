@@ -186,6 +186,7 @@ public class RentalMenu {
         }
     }
 
+
     /**
      * Asks whether to rent or return a vehicle, then asks for its ID.
      * Domain errors (unknown ID, already rented, battery too low) are shown to the user.
@@ -199,8 +200,10 @@ public class RentalMenu {
         String id = readText("Enter vehicle ID: ");
         try {
             if (choice == 1) {
-                rentalService.rentVehicle   (id);
-                System.out.println("Vehicle rented successfully.");
+                int days = readInt("Enter number of rental days: ");
+                double cost = rentalService.rentVehicle(id, days);
+                System.out.println("Vehicle rented successfully. Total cost: "
+                        + String.format("%.2f", cost) + " SEK");
             } else {
                 rentalService.returnVehicle(id);
                 System.out.println("Vehicle returned successfully.");
