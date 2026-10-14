@@ -31,3 +31,9 @@
 
 ---
 
+#### Truck (subclass)
+* **Surcharge based on load capacity.** The daily price is `pricePerDay + loadCapacityKg * 0.02`, so heavier trucks cost more. The rate is a constant because it is the same for all trucks.
+* **Only what differs is overridden.** `Truck` does not override `rent()`, because it follows the default rules from `Vehicle`.
+
+---
+
