@@ -37,3 +37,10 @@
 
 ---
 
+#### ElectricScooter (subclass)
+* **Business rule inside the domain class.** The 7-day limit (`MAX_RENTAL_DAYS`) lives in `calculateRentalCost()`, not in the menu, so the rule is enforced no matter how the class is used.
+* **`IllegalArgumentException` for too many days.** The problem is the argument passed to the method, and the message shows both the limit and the requested value.
+* **The constructor uses the setters.** Validation exists in one place, so an invalid b#### Car (subclass)
+
+---
+
