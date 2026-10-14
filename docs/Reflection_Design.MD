@@ -23,3 +23,11 @@
 
 ---
 
+#### ElectricCar (subclass)
+* **`rent()` extends the parent logic instead of replacing it.** The battery is checked first, then `super.rent()` runs. This way the rented check and the state change are not duplicated.
+* **`IllegalStateException` for a low battery.** The argument (the vehicle) is valid, but its current state does not allow renting, so `IllegalStateException` fits better than `IllegalArgumentException`. The minimum is 20%, so a car with exactly 20% can still be rented.
+* **Constants for the rules.** `ECO_DISCOUNT = 0.10` is a `private static final` constant because it is a rule of this class only. `MIN_BATTERY_TO_RENT` is shared with `ElectricScooter`, so it lives in `Chargeable`. The price is multiplied by `(1 - ECO_DISCOUNT)`, which keeps the meaning 10% off clear.
+* **Renting does not drain the battery.** Only `charge()` changes the battery level. Keeping these separate makes the fleet report simpler and avoids hidden side effects.
+
+---
+
