@@ -44,3 +44,13 @@
 
 ---
 
+#### Insurable (interface)
+* **Interface instead of a method in `Vehicle`.** Not every vehicle is insured: electric scooters are not. If `calculateInsuranceCost()` lived in `Vehicle`, the scooter would have to implement it with a meaningless result (zero or an exception). An interface describes a capability that only some classes have, so only `Car`, `ElectricCar` and `Truck` implement it.
+* **Polymorphic use.** The fleet report treats every insured vehicle the same way through an `Insurable` reference and calls `calculateInsuranceCost()` without knowing the concrete type. A new insurable vehicle type only needs `implements Insurable`, and `RentalService` does not have to change.
+* **Fixed daily rate as a named constant.** Each class has its own `INSURANCE_PER_DAY`. The order reflects the assumed risk and value of each type. The values are arbitrary and easy to change in one place.
+* **Alternative: percentage of the rental cost.** I considered this, but it would tie insurance to the rental price and to discounts such as the eco discount in `ElectricCar`. A fixed rate keeps the two calculations independent and easier to understand.
+* **Day validation reused.** Each implementation calls `validateDays()` from `Vehicle` first, so invalid input is rejected in the same way as in `calculateRentalCost()`.
+* **Interface instead of an intermediate abstract class.** An `InsurableVehicle` class between `Vehicle` and its subclasses would work, but Java allows only one superclass. `ElectricCar` also needs `Chargeable`, and a class can implement several interfaces at once.
+
+---
+
