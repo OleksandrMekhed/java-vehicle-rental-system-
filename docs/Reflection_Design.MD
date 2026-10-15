@@ -54,3 +54,14 @@
 
 ---
 
+#### Chargeable (interface)
+* **Interface instead of a shared superclass.** `ElectricCar` and `ElectricScooter` share only the battery, and Java allows only one superclass. `ElectricCar` also implements `Insurable`, so an interface lets it combine both capabilities without making the hierarchy deeper.
+* **Alternative: for exampl an `ElectricVehicle` abstract class.** It would remove the repeated battery check in `rent
+()`, but it would add a level to the hierarchy and still could not be combined with other capabilities. I accepted the small duplication to keep the hierarchy flat.
+* **Polymorphic use.** The fleet report and the charge logic loop over `Chargeable` references and call `charge()` without knowing the concrete type. A new electric vehicle type only needs `implements Chargeable`.
+* **`charge()` fills the battery to full.** It reuses `setBatteryPercent()`, so the 0-100 validation stays in one place. Only `charge()` raises the battery level and renting never lowers it, which keeps the two actions independent.
+* **Two independent interfaces.** `Insurable` and `Chargeable` describe different capabilities. `ElectricCar` implements both, `Car` and `Truck` only `Insurable`, and `ElectricScooter` only `Chargeable`. A single combined interface would force classes to implement methods they do not need.
+* **Battery constants live in `Chargeable`.** `FULL_BATTERY` and `MIN_BATTERY_TO_RENT` are rules shared by every electric vehicle, so they are defined once in the interface (fields in an interface are implicitly `public static final`) instead of being duplicated in `ElectricCar` and `ElectricScooter`. If a rule changes, only one line changes.
+
+---
+
