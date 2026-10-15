@@ -65,3 +65,17 @@
 
 ---
 
+#### RentalService (fleet management)
+* **No input or output in the service.** `RentalService` never uses `Scanner` or `System.out`. Problems are reported by throwing exceptions, and the menu decides how to show them. This keeps business rules in the domain layer and the menu purely interactive.
+* **`ArrayList` for the fleet.** The fleet is searched and iterated far more often than it is changed, and an `ArrayList` is simple and fast for that. Vehicles are found by looping, so no extra data structure is needed.
+* **`getAll()` returns a copy.** The internal list cannot be changed from outside, so every change goes through `addVehicle()` and `removeVehicle()`, where the rules are checked.
+* **`findById()` is reused.** ID validation and the "not found" error exist in one place and are used by `removeVehicle()`, `rentVehicle()` and `returnVehicle()`.
+* **Unique ID are checked in the service.** A single `Vehicle` does not know about the other vehicles, so the duplicate check belongs to the class that owns the list.
+* **A rented vehicle cannot be removed.** This is a state problem, so it throws `IllegalStateException`, not `IllegalArgumentException`.
+* **`searchByType()` uses the class name.** Comparing `getClass().getSimpleName()` means a new vehicle subclass is found automatically, without a chain of `instanceof` checks.
+* **`instanceof` only for capabilities.** The report uses `instanceof Insurable` and `instanceof Chargeable` to treat different classes through the same interface. The service never checks for concrete types such as `Car` or `Truck`, so new types can be added without changing it.
+* **An empty search result is not an error.** The service returns an empty list, and the menu decides what to tell the user.
+* **Charging only concerns vehicles in the fleet.** `chargeAll()` and `getVehiclesNeedingCharge()` skip rented vehicles, because a vehicle that is out with a customer cannot be charged by the company, and its battery level is not the company's concern until it is returned. Both methods use the same rule, so the report always matches what charging would actually do.
+
+---
+
