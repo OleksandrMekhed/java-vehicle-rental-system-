@@ -79,3 +79,13 @@
 
 ---
 
+#### RentalMenu and Main (interaction layer)
+* **The menu contains interaction logic only.** `RentalMenu` asks questions, calls `RentalService` and prints results. It contains no calculations and no business rules, so the console could be replaced by another interface without touching the domain classes.
+* **Input is read as text and parsed.** Every answer is read with `nextLine()` and converted with `Integer.parseInt()` or `Double.parseDouble()`, not with `nextInt()`. This avoids leftover newline problems in the `Scanner`, and a letter or an empty answer cannot crash the program.
+* **Specific `catch` blocks.** The read helpers catch `NumberFormatException` and ask again. The actions catch `IllegalArgumentException | IllegalStateException` and show `getMessage()`. There is no general `catch (Exception e)`, so unexpected programming errors are not hidden.
+* **Helper methods avoid repetition.** `readInt()`, `readText()` and `readDouble()` are reused by every action, and `printVehicles()` is reused by "show all" and "search". `readDouble()` also rejects `NaN` and `Infinity`, which `Double.parseDouble()` would accept.
+* **Validation is checked before the domain is called.** The menu choice is checked before asking for an ID, so an invalid choice does not force the user to type data that is thrown away. Domain errors (unknown ID, low battery) are not duplicated in the menu: they come from the domain classes as exceptions.
+* **The report asks before it charges.** The fleet report shows what needs charging and only calls `chargeAll()` after the user confirms, because a report should not change data by itself.
+* **`Main` only starts the program.** It creates `RentalService` and `RentalMenu` and calls `run()`. Dependencies are passed through the constructor, so the menu does not create its own service.
+* **Alternative: a `switch` on vehicle type in the menu.** Creating a vehicle needs a `switch` on type, because different classes need different questions. attery level or speed cannot enter through the constructor.
+* **Design alternative: shared `ElectricVehicle` class.** `ElectricCar` and `ElectricScooter` repeat the battery check in `rent()`. An intermediate abstract class could remove this, but it would make the hierarchy deeper. I kept the hierarchy flat and share the behaviour through the `Chargeable` interface instead the duplication is small.
