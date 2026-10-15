@@ -85,7 +85,7 @@ A Vehicle Rental System for a rental company. The application manages a fleet of
 5. **Remove Vehicle:** Delete a vehicle from the fleet using unique `id`.
 6. **Generate Fleet Report (Custom Action):** Display expected rental income, number of rented vehicles, vehicles that 
    need charging and total insurance cost.
-0. ** 0 - Exit Program:** Quit the application.
+0. **0 - Exit Program:** Quit the application.
 
 ---
 
